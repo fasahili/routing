@@ -1,0 +1,27 @@
+.user-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 10px 5px 4px rgba(25, 0, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.user-username {
+  color: #555;
+}
+
+.user-email {
+  color: #0073e6;
+}
+
+.user-address {
+  font-family: italic;
+  font-size: 1em;
+}
