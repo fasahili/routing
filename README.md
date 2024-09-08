@@ -8,7 +8,6 @@ This project is a React application that demonstrates user authentication, API i
 - API service integration for user and product data
 - Responsive navigation bar with dynamic user information
 - Conditional rendering based on authentication state
-- Modular folder structure for easy maintainability
 
 ## Project Structure
 
@@ -39,7 +38,7 @@ This project is a React application that demonstrates user authentication, API i
 |   |   |   |-- home.style.css
 |   |   |-- NoPage.js              // Component for 404 or no-page scenario
 |   |-- /utils
-|   |   |-- api.js                 // General API utilities
+|   |   |-- Localization                // Translation utilities and configuration
 |   |-- App.js                     // Main application component
 |   |-- index.js                   // Entry point of the application
 |-- .gitignore
