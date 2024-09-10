@@ -7,6 +7,7 @@ import RadioButton from "../form/widgets/RadioButton/RadioButton";
 import Summary from "../form/displayData/Summary";
 import { AuthContext } from "../../api/AuthContext";
 import { apiSignUp } from "../../api/SignUp";
+import Modal from "../modal/Modal";
 import "./form.style.css";
 
 const SignUp = () => {
@@ -22,7 +23,7 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -80,93 +81,98 @@ const SignUp = () => {
         };
 
         const data = await apiSignUp(userData);
-        setSubmitted(true);
+
         login(data.token, { firstName: formData.username });
-        navigate("/");
+        setIsModalOpen(true);
       } catch (error) {
         setErrors({ api: error.message || t("form.errors.apiError") });
       }
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate("/");
+  };
+
   return (
     <div className="form-container">
-      {!submitted ? (
-        <div className="form-content">
-          <h1 className="title-form">{t("nav.signUp")}</h1>
-          <form onSubmit={handleSubmit}>
-            <InputField
-              label={t("form.firstName")}
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              error={errors.firstName}
-            />
-            <InputField
-              label={t("form.lastName")}
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              error={errors.lastName}
-            />
-            <InputField
-              label={t("form.email")}
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={errors.email}
-            />
-            <InputField
-              label={t("form.password")}
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              error={errors.password}
-            />
-            <InputField
-              label={t("form.confirmPassword")}
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              error={errors.confirmPassword}
-            />
-            <InputField
-              label={t("form.dateOfBirth")}
-              name="dateOfBirth"
-              type="date"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
-              error={errors.dateOfBirth}
-            />
-            <RadioButton
-              name="gender"
-              label={t("form.gender.label")}
-              options={[
-                t("form.gender.male"),
-                t("form.gender.female"),
-                t("form.gender.other"),
-              ]}
-              value={formData.gender}
-              onChange={handleChange}
-              error={errors.gender}
-            />
-            <CheckboxField
-              label={t("form.termsAccepted")}
-              name="termsAccepted"
-              checked={formData.termsAccepted}
-              onChange={handleChange}
-              error={errors.termsAccepted}
-            />
-            {errors.api && <div className="error">{errors.api}</div>}
-            <button type="submit">{t("nav.signUp")}</button>
-          </form>
-        </div>
-      ) : (
+      <div className="form-content">
+        <h1 className="title-form">{t("nav.signUp")}</h1>
+        <form onSubmit={handleSubmit}>
+          <InputField
+            label={t("form.firstName")}
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            error={errors.firstName}
+          />
+          <InputField
+            label={t("form.lastName")}
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            error={errors.lastName}
+          />
+          <InputField
+            label={t("form.email")}
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+          />
+          <InputField
+            label={t("form.password")}
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+          />
+          <InputField
+            label={t("form.confirmPassword")}
+            name="confirmPassword"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            error={errors.confirmPassword}
+          />
+          <InputField
+            label={t("form.dateOfBirth")}
+            name="dateOfBirth"
+            type="date"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+            error={errors.dateOfBirth}
+          />
+          <RadioButton
+            name="gender"
+            label={t("form.gender.label")}
+            options={[
+              t("form.gender.male"),
+              t("form.gender.female"),
+              t("form.gender.other"),
+            ]}
+            value={formData.gender}
+            onChange={handleChange}
+            error={errors.gender}
+          />
+          <CheckboxField
+            label={t("form.termsAccepted")}
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleChange}
+            error={errors.termsAccepted}
+          />
+          {errors.api && <div className="error">{errors.api}</div>}
+          <button type="submit">{t("nav.signUp")}</button>
+        </form>
+      </div>
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Summary formData={formData} />
-      )}
+      </Modal>
     </div>
   );
 };

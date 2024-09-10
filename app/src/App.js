@@ -8,6 +8,7 @@ import Navbar from "./components/navbar/Navbar.js";
 import { AuthProvider } from "./api/AuthContext.js";
 import ContainerCounter from "./components/counter/counterContainer/CounterContainer.js";
 import Users from "./components/users/userList/UserList.js";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.js";
 
 function App() {
   return (
@@ -18,8 +19,23 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="signUp" element={<SignUp />} />
           <Route path="logIn" element={<LogIn />} />
-          <Route path="users" element={<Users />} />
-          <Route path="counters" element={<ContainerCounter />} />
+
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="counters"
+            element={
+              <ProtectedRoute>
+                <ContainerCounter />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
